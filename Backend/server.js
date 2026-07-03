@@ -1,25 +1,33 @@
-// server.js
-require('dotenv').config(); // Loads your .env file
+require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const apiRoutes = require('./routes/apiRoutes');
 
 const app = express();
 
-// Middleware
-app.use(cors()); // Allow frontend to connect
-app.use(express.json()); // Allow backend to read JSON data
+app.use(cors());
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true }));
 
-// A simple test route to check if the server is alive
 app.get('/api/health', (req, res) => {
-    res.json({ message: "Smart Constituency Backend is running successfully! 🚀" });
+  res.json({
+    message: 'Smart Constituency Backend is running successfully.',
+    app: 'JanAwaaz',
+    status: 'ok'
+  });
 });
 
-// We will import our actual routes here later
-// const apiRoutes = require('./routes/apiRoutes');
-// app.use('/api', apiRoutes);
+app.use('/api', apiRoutes);
 
-// Start the server
+const frontendPath = path.join(__dirname, '..', 'Frontend');
+app.use(express.static(frontendPath));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+const HOST = process.env.HOST || '127.0.0.1';
+app.listen(PORT, HOST, () => {
+  console.log(`JanAwaaz server is running on http://${HOST}:${PORT}`);
 });

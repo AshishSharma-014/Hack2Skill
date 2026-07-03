@@ -1,50 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
-    <link rel="stylesheet" href="CSS/navbar.css">
-</head>
-<body>
-    <nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar">
   <div class="nav-container">
-
-    <a href="#" class="logo">
+    <a href="index.html" class="logo" aria-label="JanAwaaz home">
+      <span class="logo-mark">JA</span>
       <span class="logo-text">Jan<span class="logo-accent">Awaaz</span></span>
     </a>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="#" class="nav-link active">Home</a></li>
-      <li><a href="#" class="nav-link">Track Status</a></li>
-      <li><a href="#" class="nav-link">Recent Works</a></li>
+      <li><a href="index.html" class="nav-link" data-page="index.html">Home</a></li>
+      <li><a href="track.html" class="nav-link" data-page="track.html">Track Status</a></li>
+      <li><a href="work.html" class="nav-link" data-page="work.html">Recent Works</a></li>
+      <li><a href="about.html" class="nav-link" data-page="about.html">About</a></li>
     </ul>
 
     <div class="nav-actions" id="navActions">
       <div class="lang-switcher">
-        <button class="lang-btn" id="langBtn">
+        <button class="lang-btn" id="langBtn" type="button" aria-expanded="false">
           <span id="langLabel">EN</span>
-          <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
         <ul class="lang-dropdown" id="langDropdown">
           <li data-lang="EN">English</li>
-          <li data-lang="HI">हिंदी (Hindi)</li>
+          <li data-lang="HI">Hindi</li>
         </ul>
       </div>
 
-      <button class="officer-btn">Officer Portal</button>
+      <a class="officer-btn" href="login.html">Officer Portal</a>
     </div>
 
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
     </button>
-
   </div>
 </nav>
-    <script src="Js/navbar.js"></script>
-</body>
-</html>

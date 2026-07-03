@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Status | JanAwaaz</title>
+<link rel="stylesheet" href="CSS/navbar.css">
+<link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <main class="status-page">
+    <section class="status-card">
+      <span class="eyebrow">Citizen Transparency</span>
+      <h1>Track Your Request</h1>
+      <p>Enter your JanAwaaz ticket ID to see the current lifecycle status.</p>
+
+      <form id="trackForm" class="track-form">
+        <input id="ticketInput" placeholder="Example: JA-260703-001" autocomplete="off">
+        <button type="submit">Track Status</button>
+      </form>
+
+      <div id="ticketResult" class="ticket-result"></div>
+    </section>
+  </main>
+
+  <script src="Js/navbar.js"></script>
+  <script src="Js/track-status.js"></script>
+</body>
+</html>

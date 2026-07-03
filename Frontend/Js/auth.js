@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const API_BASE = window.JANAWAAZ_API_BASE || 'http://localhost:5000/api';
   const step1 = document.getElementById('step1');
   const step2 = document.getElementById('step2');
   const mobileInput = document.getElementById('mobileInput');
@@ -10,108 +11,96 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorMessage = document.getElementById('errorMessage');
   const otpBoxes = document.querySelectorAll('.otp-box');
 
-  const DUMMY_OTP = '1234';
-
-  // Only allow digits in mobile input
   mobileInput.addEventListener('input', () => {
     mobileInput.value = mobileInput.value.replace(/\D/g, '').slice(0, 10);
   });
 
-  // Auto-advance OTP boxes
   otpBoxes.forEach((box, index) => {
     box.addEventListener('input', () => {
       box.value = box.value.replace(/\D/g, '').slice(0, 1);
-      if (box.value && index < otpBoxes.length - 1) {
-        otpBoxes[index + 1].focus();
-      }
+      if (box.value && index < otpBoxes.length - 1) otpBoxes[index + 1].focus();
       errorMessage.classList.remove('show');
     });
 
-    box.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !box.value && index > 0) {
-        otpBoxes[index - 1].focus();
-      }
+    box.addEventListener('keydown', event => {
+      if (event.key === 'Backspace' && !box.value && index > 0) otpBoxes[index - 1].focus();
     });
   });
 
-  // Send OTP
-  sendOtpBtn.addEventListener('click', () => {
+  sendOtpBtn.addEventListener('click', async () => {
     const number = mobileInput.value.trim();
-
     if (number.length !== 10) {
-      mobileInput.style.borderColor = '#ff4d4d';
       mobileInput.focus();
-      setTimeout(() => { mobileInput.style.borderColor = ''; }, 1500);
+      showMessage('Enter a valid 10-digit mobile number.');
       return;
     }
 
-    const btnText = sendOtpBtn.querySelector('.btn-text');
-    btnText.textContent = 'Sending...';
-    sendOtpBtn.disabled = true;
-
-    setTimeout(() => {
-      btnText.textContent = 'Send OTP';
-      sendOtpBtn.disabled = false;
+    await withButton(sendOtpBtn, 'Sending...', async () => {
+      try {
+        await fetch(`${API_BASE}/otp/send`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: number })
+        });
+      } catch (error) {
+        // Demo OTP still works without the backend.
+      }
 
       mobileDisplay.textContent = `+91 ${number}`;
-
       step1.classList.add('hidden');
       step2.classList.remove('hidden');
       step2.classList.add('fade-in');
-
-      otpBoxes.forEach(b => b.value = '');
+      otpBoxes.forEach(box => { box.value = ''; });
       otpBoxes[0].focus();
-    }, 1000);
+    });
   });
 
-  // Verify OTP
-  verifyBtn.addEventListener('click', () => {
-    const enteredOtp = Array.from(otpBoxes).map(b => b.value).join('');
-
+  verifyBtn.addEventListener('click', async () => {
+    const enteredOtp = Array.from(otpBoxes).map(box => box.value).join('');
     if (enteredOtp.length !== 4) {
       showError();
       return;
     }
 
-    if (enteredOtp === DUMMY_OTP) {
-      const btnText = verifyBtn.querySelector('.btn-text');
-      btnText.textContent = 'Verified ✓';
-      verifyBtn.disabled = true;
+    await withButton(verifyBtn, 'Verifying...', async () => {
+      try {
+        const response = await fetch(`${API_BASE}/otp/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: mobileInput.value, otp: enteredOtp })
+        });
+        if (!response.ok) throw new Error('Invalid OTP');
+      } catch (error) {
+        if (enteredOtp !== '1234') {
+          showError();
+          return;
+        }
+      }
 
+      localStorage.setItem('janawaaz-officer-auth', 'true');
+      verifyBtn.querySelector('.btn-text').textContent = 'Verified';
       setTimeout(() => {
-        window.location.href = 'mp-dashboard.html';
-      }, 600);
-    } else {
-      showError();
-    }
+        window.location.href = 'mp-dash.html';
+      }, 500);
+      return 'keep-loading';
+    });
   });
 
-  function showError() {
-    errorMessage.classList.add('show');
-    otpBoxes.forEach(box => {
-      box.classList.add('shake');
-      setTimeout(() => box.classList.remove('shake'), 400);
-    });
-  }
-
-  // Resend OTP
-  resendLink.addEventListener('click', (e) => {
-    e.preventDefault();
+  resendLink.addEventListener('click', event => {
+    event.preventDefault();
     if (resendLink.classList.contains('disabled')) return;
 
     resendLink.classList.add('disabled');
     resendLink.textContent = 'Resending...';
-
     setTimeout(() => {
       resendLink.textContent = 'Resend OTP';
       resendLink.classList.remove('disabled');
       errorMessage.classList.remove('show');
-      otpBoxes.forEach(b => b.value = '');
+      otpBoxes.forEach(box => { box.value = ''; });
       otpBoxes[0].focus();
-    }, 1200);
+    }, 1000);
   });
 
-  // Back to mobile number step
   backBtn.addEventListener('click', () => {
     step2.classList.add('hidden');
     step2.classList.remove('fade-in');
@@ -119,4 +108,29 @@ document.addEventListener('DOMContentLoaded', () => {
     errorMessage.classList.remove('show');
     mobileInput.focus();
   });
+
+  async function withButton(button, loadingText, task) {
+    const textNode = button.querySelector('.btn-text');
+    const originalText = textNode.textContent;
+    textNode.textContent = loadingText;
+    button.disabled = true;
+    const result = await task();
+    if (result === 'keep-loading') return;
+    if (!button.disabled) return;
+    textNode.textContent = originalText;
+    button.disabled = false;
+  }
+
+  function showError() {
+    showMessage('Invalid OTP. Use 1234 for this MVP demo.');
+    otpBoxes.forEach(box => {
+      box.classList.add('shake');
+      setTimeout(() => box.classList.remove('shake'), 400);
+    });
+  }
+
+  function showMessage(message) {
+    errorMessage.textContent = message;
+    errorMessage.classList.add('show');
+  }
 });

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "JA-260703-001",
+    "issueType": "Roads",
+    "demand": "Repair broken main road and potholes",
+    "description": "Large potholes near MG Road are causing accidents and traffic jams.",
+    "locationText": "Ward 12, MG Road",
+    "coordinates": {
+      "lat": 25.5941,
+      "lng": 85.1376
+    },
+    "aiSeverity": 9,
+    "crowdDemand": 42,
+    "demographicMultiplier": 1.2,
+    "priorityScore": 454,
+    "aiScore": 92,
+    "status": "NEW",
+    "assignedTo": null,
+    "phone": "9999900001",
+    "evidenceName": "",
+    "beforePhotoName": "",
+    "afterPhotoName": "",
+    "budget": "",
+    "remarks": "",
+    "createdAt": "2026-07-03T04:00:00.000Z",
+    "updatedAt": "2026-07-03T04:00:00.000Z"
+  },
+  {
+    "id": "JA-260703-002",
+    "issueType": "Water",
+    "demand": "Fix leaking water pipeline",
+    "description": "A pipeline has been leaking for three days near Nehru Nagar.",
+    "locationText": "Ward 7, Nehru Nagar",
+    "coordinates": {
+      "lat": 25.6127,
+      "lng": 85.1589
+    },
+    "aiSeverity": 8,
+    "crowdDemand": 31,
+    "demographicMultiplier": 1.15,
+    "priorityScore": 285,
+    "aiScore": 78,
+    "status": "VERIFICATION_PENDING",
+    "assignedTo": "JE",
+    "phone": "9999900002",
+    "evidenceName": "",
+    "beforePhotoName": "",
+    "afterPhotoName": "",
+    "budget": "",
+    "remarks": "",
+    "createdAt": "2026-07-03T05:00:00.000Z",
+    "updatedAt": "2026-07-03T05:30:00.000Z"
+  },
+  {
+    "id": "JA-260703-003",
+    "issueType": "Street Lighting",
+    "demand": "Install lights near Gandhi Chowk",
+    "description": "The lane is dark at night and unsafe for residents.",
+    "locationText": "Ward 3, Gandhi Chowk",
+    "coordinates": {
+      "lat": 25.6045,
+      "lng": 85.1211
+    },
+    "aiSeverity": 5,
+    "crowdDemand": 17,
+    "demographicMultiplier": 1,
+    "priorityScore": 85,
+    "aiScore": 45,
+    "status": "VERIFIED",
+    "assignedTo": "JE",
+    "phone": "9999900003",
+    "evidenceName": "",
+    "beforePhotoName": "before-lighting.jpg",
+    "afterPhotoName": "",
+    "budget": "65000",
+    "remarks": "Four poles required; wiring access available.",
+    "createdAt": "2026-07-02T06:00:00.000Z",
+    "updatedAt": "2026-07-03T06:10:00.000Z"
+  }
+]

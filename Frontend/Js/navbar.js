@@ -1,4 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  const placeholder = document.getElementById('navbar-placeholder');
+
+  if (placeholder) {
+    try {
+      const response = await fetch('navbar.html');
+      placeholder.innerHTML = await response.text();
+    } catch (error) {
+      placeholder.innerHTML = '<nav class="navbar"><div class="nav-container"><a class="logo" href="index.html"><span class="logo-text">Jan<span class="logo-accent">Awaaz</span></span></a></div></nav>';
+    }
+  }
+
+  initNavbar();
+});
+
+function initNavbar() {
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   const navActions = document.getElementById('navActions');
@@ -7,57 +22,60 @@ document.addEventListener('DOMContentLoaded', () => {
   const langDropdown = document.getElementById('langDropdown');
   const langLabel = document.getElementById('langLabel');
 
-  // Hamburger toggle
+  if (!hamburger || !navLinks || !navActions) return;
+
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.dataset.page === currentPage);
+  });
+
+  const closeMenu = () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+    navActions.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+  };
+
   hamburger.addEventListener('click', () => {
     const isOpen = hamburger.classList.toggle('active');
     navLinks.classList.toggle('open', isOpen);
     navActions.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
     document.body.classList.toggle('nav-open', isOpen);
   });
 
-  // Close mobile menu when a link is clicked
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('open');
-      navActions.classList.remove('open');
-      document.body.classList.remove('nav-open');
+    link.addEventListener('click', closeMenu);
+  });
 
-      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
+  if (langBtn && langSwitcher && langDropdown && langLabel) {
+    langBtn.addEventListener('click', event => {
+      event.stopPropagation();
+      const isOpen = langSwitcher.classList.toggle('open');
+      langBtn.setAttribute('aria-expanded', String(isOpen));
     });
-  });
 
-  // Language dropdown toggle
-  langBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    langSwitcher.classList.toggle('open');
-  });
-
-  // Select language
-  langDropdown.querySelectorAll('li').forEach(item => {
-    item.addEventListener('click', () => {
-      langLabel.textContent = item.dataset.lang;
-      langSwitcher.classList.remove('open');
-      // Hook your i18n logic here, e.g.:
-      // setAppLanguage(item.dataset.lang);
+    langDropdown.querySelectorAll('li').forEach(item => {
+      item.addEventListener('click', () => {
+        langLabel.textContent = item.dataset.lang;
+        langSwitcher.classList.remove('open');
+        langBtn.setAttribute('aria-expanded', 'false');
+        localStorage.setItem('janawaaz-lang', item.dataset.lang);
+      });
     });
-  });
 
-  // Close dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!langSwitcher.contains(e.target)) {
-      langSwitcher.classList.remove('open');
-    }
-  });
+    langLabel.textContent = localStorage.getItem('janawaaz-lang') || 'EN';
 
-  // Close mobile menu on resize to desktop
+    document.addEventListener('click', event => {
+      if (!langSwitcher.contains(event.target)) {
+        langSwitcher.classList.remove('open');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('open');
-      navActions.classList.remove('open');
-      document.body.classList.remove('nav-open');
-    }
+    if (window.innerWidth > 900) closeMenu();
   });
-});
+}

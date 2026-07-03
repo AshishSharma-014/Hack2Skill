@@ -3,66 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JanAwaaz | Raise Your Voice</title>
+<title>JanAwaaz | Smart Constituency System</title>
 <link rel="stylesheet" href="CSS/navbar.css">
 <link rel="stylesheet" href="CSS/form.css">
 </head>
 <body>
-
   <div id="navbar-placeholder"></div>
 
   <main class="page">
-    <div class="bg-glow bg-glow-1"></div>
-    <div class="bg-glow bg-glow-2"></div>
+    <div class="ambient-grid"></div>
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
 
-    <section class="hero">
-      <span class="hero-tag">Civic Tech Platform</span>
-      <h1 class="hero-title">
-        Raise Your Voice. <span class="highlight">Build Your Community.</span>
-      </h1>
-      <p class="hero-subtitle">
-        Report civic issues directly to your MP's office and track real-time resolution progress.
-      </p>
-    </section>
+    <section class="hero-shell">
+      <div class="hero-copy">
+        <span class="hero-tag">AI Constituency Intelligence</span>
+        <h1 class="hero-title">
+          Raise Your Voice. Build Your Community.
+        </h1>
+        <p class="hero-subtitle">
+          JanAwaaz converts citizen voices, photos, and locations into ranked development priorities for MPs and verified field tasks for engineers.
+        </p>
 
-    <section class="form-card glass">
-      <form id="complaintForm" novalidate>
-
-        <div class="field-group">
-          <textarea id="complaintText" class="floating-input" placeholder=" " rows="5" required></textarea>
-          <label for="complaintText" class="floating-label">Describe your complaint in detail...</label>
-          <div class="field-glow"></div>
+        <div class="hero-actions">
+          <a href="#complaint-panel" class="hero-cta">Submit a Request</a>
+          <a href="track.html" class="hero-link">Track a Ticket</a>
         </div>
 
-        <div class="action-row">
-          <button type="button" id="voiceBtn" class="voice-btn">
-            <span class="voice-icon">🎙️</span>
-            <span class="voice-text">Record Voice</span>
-            <span class="pulse-ring"></span>
+        <div class="trust-strip" aria-label="Platform highlights">
+          <span>Voice + Text</span>
+          <span>AI Ranking</span>
+          <span>Field Proof</span>
+        </div>
+      </div>
+
+      <section class="form-card glass" id="complaint-panel">
+        <div class="form-header">
+          <span class="form-kicker">Citizen Request Console</span>
+          <h2>Tell us what your area needs</h2>
+          <p>Submit a complaint or development suggestion. The AI engine will classify, score, and route it.</p>
+        </div>
+
+        <form id="complaintForm" novalidate>
+          <div class="field-group">
+            <input id="phoneInput" class="floating-input compact-input" placeholder=" " maxlength="10" inputmode="numeric" required>
+            <label for="phoneInput" class="floating-label">10-digit mobile number</label>
+            <div class="field-glow"></div>
+          </div>
+
+          <div class="field-group">
+            <textarea id="complaintText" class="floating-input" placeholder=" " rows="5" required></textarea>
+            <label for="complaintText" class="floating-label">Describe the issue or public work needed</label>
+            <div class="field-glow"></div>
+          </div>
+
+          <div class="field-group">
+            <input id="locationTextInput" class="floating-input compact-input" placeholder=" ">
+            <label for="locationTextInput" class="floating-label">Ward, colony, village, or landmark</label>
+            <div class="field-glow"></div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" id="voiceBtn" class="voice-btn">
+              <span class="voice-icon">Voice</span>
+              <span class="voice-text">Record Voice</span>
+              <span class="pulse-ring"></span>
+            </button>
+
+            <div class="upload-wrapper">
+              <input type="file" id="photoUpload" accept="image/*" hidden>
+              <label for="photoUpload" class="upload-label">
+                <span class="upload-icon">Photo</span>
+                <span id="uploadText">Upload Evidence</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="button" id="locationBtn" class="location-btn">
+            <span class="loc-icon">GPS</span>
+            Use My Current Location
           </button>
 
-          <div class="upload-wrapper">
-            <input type="file" id="photoUpload" accept="image/*" hidden>
-            <label for="photoUpload" class="upload-label">
-              <span class="upload-icon">📷</span>
-              <span id="uploadText">Upload Photo Evidence</span>
-            </label>
-          </div>
-        </div>
+          <div class="location-status" id="locationStatus"></div>
 
-        <button type="button" id="locationBtn" class="location-btn">
-          <span class="loc-icon">📍</span>
-          Use My Current Location
-        </button>
+          <button type="submit" class="submit-btn">
+            <span class="submit-text">Submit Request</span>
+            <span class="submit-arrow">→</span>
+          </button>
+        </form>
+      </section>
+    </section>
 
-        <div class="location-status" id="locationStatus"></div>
-
-        <button type="submit" class="submit-btn">
-          <span class="submit-text">Submit Request</span>
-          <span class="submit-arrow">→</span>
-        </button>
-
-      </form>
+    <section class="impact-band">
+      <article>
+        <span>01</span>
+        <h3>Citizen Input</h3>
+        <p>Text, voice, photos, and GPS arrive through one fast mobile web flow.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h3>AI Priority Engine</h3>
+        <p>Issues are classified and ranked by severity, crowd demand, and public-data multipliers.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>Verified Delivery</h3>
+        <p>MPs forward work to JE dashboards, then before/after proof closes the loop.</p>
+      </article>
     </section>
   </main>
 
