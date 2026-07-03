@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MP Dashboard | JanAwaaz</title>
+<link rel="stylesheet" href="CSS/navbar.css">
+<link rel="stylesheet" href="CSS/dashboard.css">
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="dashboard">
+
+    <div class="dashboard-header">
+      <div>
+        <h1>District Overview <span class="header-highlight">— AI Priority Engine</span></h1>
+        <p class="header-subtitle">Real-time constituency insights, ranked by urgency</p>
+      </div>
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        Live Data
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <section class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-icon icon-total">📋</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Total Requests</span>
+          <span class="kpi-value" id="kpiTotal">0</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon icon-critical">🚨</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Critical Alerts</span>
+          <span class="kpi-value" id="kpiCritical">0</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon icon-pending">⏳</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Pending Verifications</span>
+          <span class="kpi-value" id="kpiPending">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Middle: Table + Map -->
+    <section class="middle-section">
+
+      <div class="table-panel">
+        <div class="panel-header">
+          <h2>AI Priority Queue</h2>
+          <span class="panel-tag">Sorted by AI Score</span>
+        </div>
+
+        <div class="table-scroll">
+          <table class="priority-table">
+            <thead>
+              <tr>
+                <th>Issue Type</th>
+                <th>Location</th>
+                <th>Demand</th>
+                <th>AI Score</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="complaintsTableBody">
+              <!-- Rows injected via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="map-panel">
+        <div class="panel-header">
+          <h2>Issue Heatmap</h2>
+          <span class="panel-tag">By Ward</span>
+        </div>
+
+        <div id="heatmap-map">
+          <div class="map-placeholder-content">
+            <span class="map-icon">🗺️</span>
+            <p>Map visualization loading...</p>
+            <span class="map-sub">Constituency ward-level heatmap</span>
+          </div>
+          <div class="map-pin pin-1"></div>
+          <div class="map-pin pin-2"></div>
+          <div class="map-pin pin-3"></div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="Js/navbar.js"></script>
+  <script src="Js/mp-dash.js"></script>
+</body>
+</html>

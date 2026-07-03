@@ -1,0 +1,411 @@
+:root {
+  --color-darkest: #03045e;
+  --color-dark: #0077b6;
+  --color-mid: #00b4d8;
+  --color-light: #90e0ef;
+  --color-lightest: #caf0f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(160deg, var(--color-darkest) 0%, #041b6e 50%, var(--color-dark) 100%);
+  min-height: 100vh;
+  color: var(--color-lightest);
+}
+
+.page {
+  position: relative;
+  padding: 80px 20px 100px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Background glow blobs */
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-glow-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-mid);
+  top: -100px;
+  left: -100px;
+  animation: float1 10s ease-in-out infinite;
+}
+
+.bg-glow-2 {
+  width: 350px;
+  height: 350px;
+  background: var(--color-light);
+  bottom: -80px;
+  right: -80px;
+  animation: float2 12s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, 30px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, -40px); }
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.hero-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: rgba(0, 180, 216, 0.15);
+  border: 1px solid rgba(0, 180, 216, 0.4);
+  color: var(--color-mid);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  animation: fadeInDown 0.8s ease;
+}
+
+.hero-title {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  animation: fadeInUp 0.8s ease 0.1s both;
+}
+
+.highlight {
+  background: linear-gradient(90deg, var(--color-mid), var(--color-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 17px;
+  color: var(--color-light);
+  line-height: 1.6;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glassmorphism form card */
+.form-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  padding: 40px;
+  border-radius: 24px;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+.glass {
+  background: rgba(202, 240, 248, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(144, 224, 239, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* Floating label textarea */
+.field-group {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.floating-input {
+  width: 100%;
+  background: rgba(3, 4, 94, 0.35);
+  border: 1.5px solid rgba(144, 224, 239, 0.25);
+  border-radius: 14px;
+  padding: 22px 18px 10px;
+  color: var(--color-lightest);
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-input::placeholder {
+  color: transparent;
+}
+
+.floating-label {
+  position: absolute;
+  left: 18px;
+  top: 22px;
+  color: var(--color-light);
+  font-size: 15px;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  background: transparent;
+}
+
+.floating-input:focus + .floating-label,
+.floating-input:not(:placeholder-shown) + .floating-label {
+  top: -10px;
+  left: 14px;
+  font-size: 12px;
+  padding: 0 6px;
+  color: var(--color-mid);
+  background: var(--color-darkest);
+  border-radius: 4px;
+}
+
+.floating-input:focus {
+  border-color: var(--color-mid);
+  box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.15), 0 0 20px rgba(0, 180, 216, 0.3);
+}
+
+.field-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* Action row: voice + upload */
+.action-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+/* Voice button */
+.voice-btn {
+  position: relative;
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(0, 119, 182, 0.25);
+  border: 1.5px solid var(--color-dark);
+  color: var(--color-lightest);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: visible;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.voice-btn:hover,
+.voice-btn.recording {
+  background: rgba(0, 119, 182, 0.45);
+  transform: translateY(-2px);
+}
+
+.voice-icon {
+  font-size: 16px;
+}
+
+.pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 2px solid var(--color-mid);
+  opacity: 0;
+  transform: scale(1);
+}
+
+.voice-btn:hover .pulse-ring,
+.voice-btn.recording .pulse-ring {
+  animation: pulseRing 1.4s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+.voice-btn.recording {
+  border-color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.15);
+}
+
+.voice-btn.recording .pulse-ring {
+  border-color: #ff4d4d;
+}
+
+/* Upload */
+.upload-wrapper {
+  flex: 1;
+  min-width: 160px;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(144, 224, 239, 0.08);
+  border: 1.5px dashed rgba(144, 224, 239, 0.4);
+  color: var(--color-light);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.upload-label:hover {
+  border-color: var(--color-mid);
+  background: rgba(0, 180, 216, 0.1);
+  color: var(--color-lightest);
+}
+
+.upload-icon {
+  font-size: 16px;
+}
+
+/* Location button */
+.location-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--color-darkest);
+  border: 1.5px solid rgba(144, 224, 239, 0.3);
+  color: var(--color-lightest);
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.location-btn:hover {
+  background: #050a80;
+  box-shadow: 0 0 20px rgba(0, 180, 216, 0.35);
+  transform: translateY(-2px);
+}
+
+.loc-icon {
+  font-size: 16px;
+}
+
+.location-status {
+  min-height: 20px;
+  font-size: 13px;
+  color: var(--color-mid);
+  text-align: center;
+  margin-bottom: 22px;
+  transition: opacity 0.3s ease;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, var(--color-mid), var(--color-dark));
+  color: #fff;
+  border: none;
+  padding: 18px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 180, 216, 0.45);
+}
+
+.submit-btn:hover::before {
+  left: 100%;
+}
+
+.submit-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.submit-arrow {
+  transition: transform 0.3s ease;
+}
+
+.submit-btn:hover .submit-arrow {
+  transform: translateX(6px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-card {
+    padding: 28px 22px;
+  }
+
+  .action-row {
+    flex-direction: column;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+}

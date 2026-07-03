@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="CSS/navbar.css">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+  <div class="nav-container">
+
+    <a href="#" class="logo">
+      <span class="logo-text">Jan<span class="logo-accent">Awaaz</span></span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" class="nav-link active">Home</a></li>
+      <li><a href="#" class="nav-link">Track Status</a></li>
+      <li><a href="#" class="nav-link">Recent Works</a></li>
+    </ul>
+
+    <div class="nav-actions" id="navActions">
+      <div class="lang-switcher">
+        <button class="lang-btn" id="langBtn">
+          <span id="langLabel">EN</span>
+          <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="lang-dropdown" id="langDropdown">
+          <li data-lang="EN">English</li>
+          <li data-lang="HI">हिंदी (Hindi)</li>
+        </ul>
+      </div>
+
+      <button class="officer-btn">Officer Portal</button>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</nav>
+    <script src="Js/navbar.js"></script>
+</body>
+</html>

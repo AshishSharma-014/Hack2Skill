@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JanAwaaz | Raise Your Voice</title>
+<link rel="stylesheet" href="CSS/navbar.css">
+<link rel="stylesheet" href="CSS/form.css">
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="page">
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <section class="hero">
+      <span class="hero-tag">Civic Tech Platform</span>
+      <h1 class="hero-title">
+        Raise Your Voice. <span class="highlight">Build Your Community.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Report civic issues directly to your MP's office and track real-time resolution progress.
+      </p>
+    </section>
+
+    <section class="form-card glass">
+      <form id="complaintForm" novalidate>
+
+        <div class="field-group">
+          <textarea id="complaintText" class="floating-input" placeholder=" " rows="5" required></textarea>
+          <label for="complaintText" class="floating-label">Describe your complaint in detail...</label>
+          <div class="field-glow"></div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" id="voiceBtn" class="voice-btn">
+            <span class="voice-icon">🎙️</span>
+            <span class="voice-text">Record Voice</span>
+            <span class="pulse-ring"></span>
+          </button>
+
+          <div class="upload-wrapper">
+            <input type="file" id="photoUpload" accept="image/*" hidden>
+            <label for="photoUpload" class="upload-label">
+              <span class="upload-icon">📷</span>
+              <span id="uploadText">Upload Photo Evidence</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="button" id="locationBtn" class="location-btn">
+          <span class="loc-icon">📍</span>
+          Use My Current Location
+        </button>
+
+        <div class="location-status" id="locationStatus"></div>
+
+        <button type="submit" class="submit-btn">
+          <span class="submit-text">Submit Request</span>
+          <span class="submit-arrow">→</span>
+        </button>
+
+      </form>
+    </section>
+  </main>
+
+  <script src="Js/navbar.js"></script>
+  <script src="Js/citizen-form.js"></script>
+</body>
+</html>
