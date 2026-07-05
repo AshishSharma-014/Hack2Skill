@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let complaints = await loadComplaints();
   renderDashboard();
+  window.addEventListener('janawaaz:languagechange', () => renderDashboard());
 
   async function loadComplaints() {
     try {
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.forward-btn').forEach(button => {
       button.addEventListener('click', async () => {
         const id = button.dataset.id;
-        button.textContent = 'Forwarding...';
+        button.textContent = window.JanAwaazI18n?.t('Forwarding...') || 'Forwarding...';
         button.disabled = true;
 
         try {
@@ -86,13 +87,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           complaints = complaints.map(item => item.id === id ? updated : item);
           renderDashboard();
         } catch (error) {
-          button.textContent = 'Forwarded';
+          button.textContent = window.JanAwaazI18n?.t('Forwarded') || 'Forwarded';
           const item = complaints.find(row => row.id === id);
           if (item) item.status = 'VERIFICATION_PENDING';
           renderDashboard();
         }
       });
     });
+
+    window.JanAwaazI18n?.apply();
   }
 
   function renderKPIs() {

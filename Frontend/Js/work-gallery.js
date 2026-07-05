@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     renderWorks([]);
   }
+  window.addEventListener('janawaaz:languagechange', () => window.JanAwaazI18n?.apply());
 
   function renderWorks(works) {
     if (!works.length) {
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <p>Mark a JE task completed and it will publish here automatically.</p>
         </article>
       `;
+      window.JanAwaazI18n?.apply();
       return;
     }
 
@@ -34,5 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
       </article>
     `).join('');
+    window.JanAwaazI18n?.apply();
   }
 });

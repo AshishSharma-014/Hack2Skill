@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const backBtn = document.getElementById('backBtn');
   const errorMessage = document.getElementById('errorMessage');
   const otpBoxes = document.querySelectorAll('.otp-box');
+  const t = message => window.JanAwaazI18n?.t(message) || message;
+
+  window.addEventListener('janawaaz:languagechange', () => window.JanAwaazI18n?.apply());
 
   mobileInput.addEventListener('input', () => {
     mobileInput.value = mobileInput.value.replace(/\D/g, '').slice(0, 10);
@@ -31,11 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const number = mobileInput.value.trim();
     if (number.length !== 10) {
       mobileInput.focus();
-      showMessage('Enter a valid 10-digit mobile number.');
+      showMessage(t('Enter a valid 10-digit mobile number.'));
       return;
     }
 
-    await withButton(sendOtpBtn, 'Sending...', async () => {
+    await withButton(sendOtpBtn, t('Sending...'), async () => {
       try {
         await fetch(`${API_BASE}/otp/send`, {
           method: 'POST',
@@ -62,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    await withButton(verifyBtn, 'Verifying...', async () => {
+    await withButton(verifyBtn, t('Verifying...'), async () => {
       try {
         const response = await fetch(`${API_BASE}/otp/verify`, {
           method: 'POST',
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       localStorage.setItem('janawaaz-officer-auth', 'true');
-      verifyBtn.querySelector('.btn-text').textContent = 'Verified';
+      verifyBtn.querySelector('.btn-text').textContent = t('Verified');
       setTimeout(() => {
         window.location.href = 'mp-dash.html';
       }, 500);
@@ -91,9 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resendLink.classList.contains('disabled')) return;
 
     resendLink.classList.add('disabled');
-    resendLink.textContent = 'Resending...';
+    resendLink.textContent = t('Resending...');
     setTimeout(() => {
-      resendLink.textContent = 'Resend OTP';
+      resendLink.textContent = t('Resend OTP');
       resendLink.classList.remove('disabled');
       errorMessage.classList.remove('show');
       otpBoxes.forEach(box => { box.value = ''; });
@@ -122,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showError() {
-    showMessage('Invalid OTP. Use 1234 for this MVP demo.');
+    showMessage(t('Invalid OTP. Use 1234 for this MVP demo.'));
     otpBoxes.forEach(box => {
       box.classList.add('shake');
       setTimeout(() => box.classList.remove('shake'), 400);

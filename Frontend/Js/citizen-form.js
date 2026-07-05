@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let recognition = null;
   let isRecording = false;
 
+  const t = message => window.JanAwaazI18n?.t(message) || message;
+  const currentLang = () => window.JanAwaazI18n?.current() || 'EN';
+
   phoneInput.addEventListener('input', () => {
     phoneInput.value = phoneInput.value.replace(/\D/g, '').slice(0, 10);
   });
@@ -21,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (SpeechRecognition) {
     recognition = new SpeechRecognition();
-    recognition.lang = 'en-IN';
+    recognition.lang = currentLang() === 'HI' ? 'hi-IN' : 'en-IN';
     recognition.interimResults = false;
     recognition.onresult = event => {
       const transcript = event.results[0][0].transcript;
@@ -30,9 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     recognition.onend = () => setRecording(false);
   }
 
+  window.addEventListener('janawaaz:languagechange', event => {
+    if (recognition) recognition.lang = event.detail.lang === 'HI' ? 'hi-IN' : 'en-IN';
+    window.JanAwaazI18n?.apply(event.detail.lang);
+  });
+
   voiceBtn.addEventListener('click', () => {
     if (!recognition) {
-      setStatus('Voice capture is not supported in this browser. You can type the complaint instead.');
+      setStatus(t('Voice capture is not supported in this browser. You can type the complaint instead.'));
       return;
     }
 
@@ -47,25 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   photoUpload.addEventListener('change', () => {
-    uploadText.textContent = photoUpload.files.length ? photoUpload.files[0].name : 'Upload Photo Evidence';
+    uploadText.textContent = photoUpload.files.length ? photoUpload.files[0].name : t('Upload Photo Evidence');
   });
 
   locationBtn.addEventListener('click', () => {
     if (!navigator.geolocation) {
-      setStatus('GPS is unavailable. Please type the ward or landmark.');
+      setStatus(t('GPS is unavailable. Please type the ward or landmark.'));
       return;
     }
 
-    setStatus('Fetching your current location...');
+    setStatus(t('Fetching your current location...'));
     navigator.geolocation.getCurrentPosition(
       position => {
         coordinates = {
           lat: Number(position.coords.latitude.toFixed(6)),
           lng: Number(position.coords.longitude.toFixed(6))
         };
-        setStatus(`Location captured: ${coordinates.lat}, ${coordinates.lng}`);
+        setStatus(`${t('Location captured:')} ${coordinates.lat}, ${coordinates.lng}`);
       },
-      () => setStatus('Unable to fetch GPS. You can still submit with a written location.'),
+      () => setStatus(t('Unable to fetch GPS. You can still submit with a written location.')),
       { enableHighAccuracy: true, timeout: 8000 }
     );
   });
@@ -78,18 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const originalText = submitText.textContent;
 
     if (phoneInput.value.length !== 10) {
-      setStatus('Please enter a valid 10-digit mobile number.');
+      setStatus(t('Please enter a valid 10-digit mobile number.'));
       phoneInput.focus();
       return;
     }
 
     if (complaintText.value.trim().length < 10) {
-      setStatus('Please describe the issue in a little more detail.');
+      setStatus(t('Please describe the issue in a little more detail.'));
       complaintText.focus();
       return;
     }
 
-    submitText.textContent = 'Submitting...';
+    submitText.textContent = t('Submitting...');
     submitBtn.disabled = true;
 
     try {
@@ -106,17 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const payload = await response.json();
-      if (!response.ok) throw new Error(payload.message || 'Submission failed.');
+      if (!response.ok) throw new Error(payload.message || t('Submission failed.'));
 
-      submitText.textContent = `Submitted: ${payload.id}`;
-      setStatus(`AI category: ${payload.issueType}. Priority score: ${payload.priorityScore}. Track ID: ${payload.id}`);
+      submitText.textContent = `${t('Submitted:')} ${payload.id}`;
+      setStatus(`${t('AI category:')} ${payload.issueType}. ${t('Priority score:')} ${payload.priorityScore}. ${t('Track ID:')} ${payload.id}`);
       form.reset();
       coordinates = null;
-      uploadText.textContent = 'Upload Photo Evidence';
+      uploadText.textContent = t('Upload Photo Evidence');
       localStorage.setItem('last-janawaaz-ticket', payload.id);
     } catch (error) {
-      submitText.textContent = 'Saved Demo Request';
-      setStatus(`${error.message} Start the backend with npm run dev inside Backend.`);
+      submitText.textContent = t('Saved Demo Request');
+      setStatus(`${t(error.message)} ${t('Start the backend with npm run dev inside Backend.')}`);
     } finally {
       setTimeout(() => {
         submitText.textContent = originalText;
@@ -128,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function setRecording(value) {
     isRecording = value;
     voiceBtn.classList.toggle('recording', value);
-    voiceBtn.querySelector('.voice-text').textContent = value ? 'Listening...' : 'Record Voice';
+    voiceBtn.querySelector('.voice-text').textContent = value ? t('Listening...') : t('Record Voice');
   }
 
   function setStatus(message) {

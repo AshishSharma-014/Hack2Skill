@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let tasks = await loadTasks();
   renderTasks();
+  window.addEventListener('janawaaz:languagechange', () => renderTasks());
 
   async function loadTasks() {
     try {
@@ -43,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <p>Forward requests from the MP dashboard and they will appear here.</p>
         </div>
       `;
+      window.JanAwaazI18n?.apply();
       return;
     }
 
@@ -101,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     `).join('');
 
     attachEventListeners();
+    window.JanAwaazI18n?.apply();
   }
 
   function attachEventListeners() {
@@ -114,7 +117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       input.addEventListener('click', event => event.stopPropagation());
       input.addEventListener('change', () => {
         const textEl = document.querySelector(`.upload-text-${cssSafe(input.dataset.task)}`);
-        textEl.textContent = input.files.length ? input.files[0].name : 'Tap to upload photo';
+        textEl.textContent = input.files.length ? input.files[0].name : (window.JanAwaazI18n?.t('Tap to upload photo') || 'Tap to upload photo');
       });
     });
 
@@ -140,7 +143,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const uploadedName = fileInput.files[0]?.name || '';
     const originalText = button.textContent;
 
-    button.textContent = action === 'verify' ? 'Submitting...' : 'Completing...';
+    button.textContent = action === 'verify'
+      ? (window.JanAwaazI18n?.t('Submitting...') || 'Submitting...')
+      : (window.JanAwaazI18n?.t('Completing...') || 'Completing...');
     button.disabled = true;
 
     try {
@@ -165,7 +170,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         : tasks.map(task => task.id === id ? { ...task, status: 'VERIFIED', budget, remarks, beforePhotoName: uploadedName } : task);
     }
 
-    button.textContent = action === 'verify' ? 'Submitted' : 'Completed';
+    button.textContent = action === 'verify'
+      ? (window.JanAwaazI18n?.t('Submitted') || 'Submitted')
+      : (window.JanAwaazI18n?.t('Completed') || 'Completed');
     button.classList.add('success');
     setTimeout(renderTasks, 700);
     setTimeout(() => {

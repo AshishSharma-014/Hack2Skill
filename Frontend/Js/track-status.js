@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const result = document.getElementById('ticketResult');
 
   input.value = localStorage.getItem('last-janawaaz-ticket') || '';
+  window.addEventListener('janawaaz:languagechange', () => window.JanAwaazI18n?.apply());
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!id) return;
 
     result.innerHTML = '<p>Loading ticket...</p>';
+    window.JanAwaazI18n?.apply();
 
     try {
       const response = await fetch(`${API_BASE}/complaints/${encodeURIComponent(id)}`);
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderTicket(await response.json());
     } catch (error) {
       result.innerHTML = '<p class="muted">Ticket not found. Try a freshly submitted ID or JA-260703-001.</p>';
+      window.JanAwaazI18n?.apply();
     }
   });
 
@@ -42,5 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <p class="muted">${ticket.demand}</p>
     `;
+    window.JanAwaazI18n?.apply();
   }
 });
