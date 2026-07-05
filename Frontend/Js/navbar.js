@@ -22,6 +22,13 @@ const JANAWAAZ_HI_TRANSLATIONS = {
   'English': 'अंग्रेजी',
   'Hindi': 'हिंदी',
   'Officer Portal': 'अधिकारी पोर्टल',
+  'JanAwaaz | Smart Constituency System': 'जनआवाज | स्मार्ट निर्वाचन क्षेत्र प्रणाली',
+  'Track Status | JanAwaaz': 'स्थिति देखें | जनआवाज',
+  'Recent Works | JanAwaaz': 'हाल के कार्य | जनआवाज',
+  'About JanAwaaz | Smart Constituency System': 'जनआवाज के बारे में | स्मार्ट निर्वाचन क्षेत्र प्रणाली',
+  'Officer Login | JanAwaaz': 'अधिकारी लॉगिन | जनआवाज',
+  'MP Dashboard | JanAwaaz': 'MP डैशबोर्ड | जनआवाज',
+  'JE Field Dashboard | JanAwaaz': 'JE फील्ड डैशबोर्ड | जनआवाज',
   'Toggle menu': 'मेन्यू खोलें या बंद करें',
   'JanAwaaz home': 'जनआवाज होम',
   'AI Constituency Intelligence': 'AI निर्वाचन क्षेत्र इंटेलिजेंस',
@@ -188,6 +195,7 @@ const JANAWAAZ_HI_TRANSLATIONS = {
 
 const janAwaazOriginalText = new WeakMap();
 const janAwaazOriginalAttrs = new WeakMap();
+let janAwaazOriginalTitle = '';
 
 function normalizeI18nText(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
@@ -221,6 +229,8 @@ function translateJanAwaazText(value) {
 function applyJanAwaazLanguage(lang = localStorage.getItem('janawaaz-lang') || 'EN') {
   const useHindi = lang === 'HI';
   document.documentElement.lang = useHindi ? 'hi' : 'en';
+  if (!janAwaazOriginalTitle) janAwaazOriginalTitle = document.title;
+  document.title = useHindi ? translateJanAwaazText(janAwaazOriginalTitle) : janAwaazOriginalTitle;
 
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
