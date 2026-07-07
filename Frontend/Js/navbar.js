@@ -11,8 +11,59 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   initNavbar();
+  initPageTransitions();
   window.JanAwaazI18n?.apply();
 });
+
+function initPageTransitions() {
+  if (document.querySelector('.page-transition-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'page-transition-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(overlay);
+
+  const startTransition = (event, link) => {
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const href = link.getAttribute('href') || '';
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.hasAttribute('download')) return;
+
+    const targetUrl = new URL(link.href, window.location.href);
+    if (targetUrl.origin !== window.location.origin || targetUrl.pathname === window.location.pathname) return;
+
+    event.preventDefault();
+    document.body.classList.add('page-transitioning');
+    overlay.classList.add('active');
+
+    window.setTimeout(() => {
+      window.location.href = link.href;
+    }, 260);
+  };
+
+  const handleTransitionClick = (event) => {
+    const link = event.target.closest('a');
+    if (link) {
+      startTransition(event, link);
+    }
+  };
+
+  document.addEventListener('click', handleTransitionClick);
+
+  document.querySelectorAll('a.logo').forEach((logoLink) => {
+    logoLink.addEventListener('click', (event) => startTransition(event, logoLink));
+  });
+
+  window.addEventListener('pageshow', () => {
+    document.body.classList.remove('page-transitioning');
+    overlay.classList.remove('active');
+  });
+
+  window.addEventListener('load', () => {
+    document.body.classList.remove('page-transitioning');
+    overlay.classList.remove('active');
+  });
+}
 
 const JANAWAAZ_HI_TRANSLATIONS = {
   'Home': 'होम',

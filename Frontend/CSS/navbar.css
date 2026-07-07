@@ -8,6 +8,45 @@
 
 * { box-sizing: border-box; }
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+body.page-transitioning {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(135deg, #ffffff 0%, #f2f7ff 55%, #dfe8f7 100%);
+  opacity: 0;
+  transform: translateY(12px) scale(0.99);
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+
+.page-transition-overlay.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.page-transition-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(128, 155, 206, 0.24), transparent 48%);
+}
+
 .navbar {
   position: sticky;
   top: 14px;

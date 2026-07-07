@@ -98,7 +98,7 @@ body {
   color: var(--color-darkest);
   font-size: clamp(46px, 7vw, 86px);
   line-height: 0.98;
-  font-weight: 950;
+  font-weight: 900;
   letter-spacing: 0;
 }
 
