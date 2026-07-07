@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -20,10 +21,26 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api', apiRoutes);
 
-const frontendPath = path.join(__dirname, '..', 'Frontend');
-app.use(express.static(frontendPath));
+const projectRoot = path.join(__dirname, '..');
+app.use(express.static(projectRoot, { index: false }));
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
+  res.sendFile(path.join(projectRoot, 'index.html'));
+});
+
+app.get('/:page', (req, res, next) => {
+  const requestedPage = req.params.page;
+
+  if (requestedPage.includes('.')) {
+    return next();
+  }
+
+  const candidatePath = path.join(projectRoot, `${requestedPage}.html`);
+  if (fs.existsSync(candidatePath)) {
+    return res.sendFile(candidatePath);
+  }
+
+  next();
 });
 
 const PORT = process.env.PORT || 5000;
