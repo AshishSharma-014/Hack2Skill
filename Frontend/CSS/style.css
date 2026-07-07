@@ -1,9 +1,13 @@
 :root {
-  --color-darkest: #03045e;
-  --color-dark: #0077b6;
-  --color-mid: #00b4d8;
-  --color-light: #90e0ef;
-  --color-lightest: #caf0f8;
+  --color-darkest: #15233c;
+  --color-dark: #4f6481;
+  --color-mid: #809bce;
+  --color-light: #6f84ab;
+  --color-lightest: #ffffff;
+  --surface: #f7faff;
+  --danger: #d64545;
+  --warning: #d8a12f;
+  --success: #2e8b57;
 }
 
 * { box-sizing: border-box; }
@@ -11,13 +15,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  color: var(--color-lightest);
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(0, 180, 216, 0.42), transparent 28%),
-    radial-gradient(circle at 90% 12%, rgba(144, 224, 239, 0.24), transparent 26%),
-    radial-gradient(circle at 50% 100%, rgba(0, 119, 182, 0.42), transparent 36%),
-    var(--color-darkest);
+  color: var(--color-darkest);
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #f7faff 100%);
 }
 
 body::before {
@@ -26,15 +26,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(144, 224, 239, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(144, 224, 239, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(128, 155, 206, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 155, 206, 0.08) 1px, transparent 1px);
   background-size: 54px 54px;
-  mask-image: radial-gradient(circle at center, rgba(3, 4, 94, 1), transparent 76%);
-  animation: pageGrid 18s linear infinite;
-}
-
-@keyframes pageGrid {
-  to { transform: translate(54px, 54px); }
+  opacity: 0.7;
 }
 
 .status-page,
@@ -52,11 +47,9 @@ body::before {
 .architecture-grid article,
 .formula-panel,
 .lifecycle {
-  border: 1px solid rgba(144, 224, 239, 0.24);
-  background:
-    linear-gradient(145deg, rgba(202, 240, 248, 0.13), rgba(3, 4, 94, 0.55)),
-    rgba(3, 4, 94, 0.54);
-  box-shadow: 0 28px 80px rgba(3, 4, 94, 0.34), inset 0 1px 0 rgba(202, 240, 248, 0.18);
+  border: 1px solid rgba(128, 155, 206, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 255, 0.92));
+  box-shadow: 0 28px 80px rgba(21, 35, 60, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
@@ -73,10 +66,10 @@ body::before {
   align-items: center;
   min-height: 34px;
   padding: 0 14px;
-  border: 1px solid rgba(144, 224, 239, 0.26);
+  border: 1px solid rgba(128, 155, 206, 0.22);
   border-radius: 999px;
-  color: var(--color-light);
-  background: rgba(202, 240, 248, 0.08);
+  color: var(--color-darkest);
+  background: rgba(128, 155, 206, 0.12);
   font-size: 12px;
   font-weight: 950;
   text-transform: uppercase;
@@ -85,7 +78,7 @@ body::before {
 
 h1 {
   margin: 18px 0 12px;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: clamp(38px, 6vw, 70px);
   line-height: 1;
   letter-spacing: 0;
@@ -93,11 +86,11 @@ h1 {
 
 h2,
 h3 {
-  color: var(--color-lightest);
+  color: var(--color-darkest);
 }
 
 p {
-  color: var(--color-light);
+  color: var(--color-dark);
   line-height: 1.65;
 }
 
@@ -111,11 +104,11 @@ p {
 .track-form input {
   width: 100%;
   min-height: 56px;
-  border: 1.5px solid rgba(144, 224, 239, 0.26);
+  border: 1.5px solid rgba(128, 155, 206, 0.24);
   border-radius: 18px;
   padding: 0 18px;
-  color: var(--color-lightest);
-  background: rgba(3, 4, 94, 0.54);
+  color: var(--color-darkest);
+  background: rgba(255, 255, 255, 0.95);
   font: inherit;
   outline: none;
 }
@@ -130,8 +123,8 @@ p {
   border: 0;
   border-radius: 18px;
   padding: 0 22px;
-  color: var(--color-darkest);
-  background: linear-gradient(90deg, var(--color-light), var(--color-mid));
+  color: var(--color-lightest);
+  background: linear-gradient(135deg, var(--color-mid), #5b78b7);
   font-weight: 950;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -157,10 +150,10 @@ p {
 
 .ticket-summary {
   padding: 16px;
-  border: 1px solid rgba(144, 224, 239, 0.24);
+  border: 1px solid rgba(128, 155, 206, 0.2);
   border-radius: 18px;
-  color: var(--color-lightest);
-  background: rgba(202, 240, 248, 0.08);
+  color: var(--color-darkest);
+  background: rgba(128, 155, 206, 0.1);
   font-weight: 900;
 }
 
@@ -182,12 +175,12 @@ p {
   height: 18px;
   margin: 0 auto 9px;
   border-radius: 50%;
-  background: rgba(144, 224, 239, 0.18);
+  background: rgba(128, 155, 206, 0.18);
 }
 
 .timeline-step.active span {
   background: var(--color-mid);
-  box-shadow: 0 0 0 9px rgba(0, 180, 216, 0.14), 0 0 28px rgba(0, 180, 216, 0.62);
+  box-shadow: 0 0 0 9px rgba(128, 155, 206, 0.16);
 }
 
 .timeline-step p {
@@ -228,12 +221,10 @@ p {
   display: grid;
   place-items: center;
   min-height: 180px;
-  border: 1px solid rgba(144, 224, 239, 0.22);
+  border: 1px solid rgba(128, 155, 206, 0.18);
   border-radius: 20px;
   color: var(--color-darkest);
-  background:
-    linear-gradient(135deg, rgba(144, 224, 239, 0.86), rgba(0, 180, 216, 0.72)),
-    var(--color-light);
+  background: linear-gradient(135deg, #dfe8f7, #c6d6f0);
   font-weight: 950;
 }
 
@@ -291,9 +282,9 @@ p {
 .score-stack span {
   display: block;
   padding: 16px;
-  border: 1px solid rgba(144, 224, 239, 0.24);
+  border: 1px solid rgba(128, 155, 206, 0.2);
   border-radius: 18px;
-  background: rgba(202, 240, 248, 0.08);
+  background: rgba(128, 155, 206, 0.1);
 }
 
 .lifecycle {

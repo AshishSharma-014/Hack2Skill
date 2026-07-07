@@ -1,22 +1,19 @@
 :root {
-  --color-darkest: #03045e;
-  --color-dark: #0077b6;
-  --color-mid: #00b4d8;
-  --color-light: #90e0ef;
-  --color-lightest: #caf0f8;
+  --color-darkest: #15233c;
+  --color-dark: #4f6481;
+  --color-mid: #809bce;
+  --color-light: #6f84ab;
+  --color-lightest: #ffffff;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(0, 180, 216, 0.38), transparent 30%),
-    radial-gradient(circle at 82% 18%, rgba(144, 224, 239, 0.24), transparent 26%),
-    var(--color-darkest);
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #f7faff 100%);
   min-height: 100vh;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
 }
 
 .login-page {
@@ -70,12 +67,12 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(144, 224, 239, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(144, 224, 239, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(128, 155, 206, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 155, 206, 0.08) 1px, transparent 1px);
   background-size: 40px 40px;
   z-index: 0;
   pointer-events: none;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+  opacity: 0.7;
 }
 
 /* Login Card */
@@ -84,15 +81,13 @@ body {
   z-index: 1;
   width: 100%;
   max-width: 420px;
-  background:
-    linear-gradient(145deg, rgba(202, 240, 248, 0.13), rgba(3, 4, 94, 0.56)),
-    rgba(3, 4, 94, 0.56);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 255, 0.92));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(144, 224, 239, 0.2);
+  border: 1px solid rgba(128, 155, 206, 0.2);
   border-radius: 30px;
   padding: 44px 36px;
-  box-shadow: 0 28px 90px rgba(3, 4, 94, 0.38), inset 0 1px 0 rgba(202, 240, 248, 0.18);
+  box-shadow: 0 28px 90px rgba(21, 35, 60, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   animation: floatCard 5s ease-in-out infinite, fadeInUp 0.7s ease both;
 }
 
@@ -113,6 +108,7 @@ body {
   padding: 1px;
   background: linear-gradient(135deg, var(--color-mid), transparent 40%, transparent 60%, var(--color-light));
   -webkit-mask: linear-gradient(var(--color-lightest) 0 0) content-box, linear-gradient(var(--color-lightest) 0 0);
+  mask: linear-gradient(var(--color-lightest) 0 0) content-box, linear-gradient(var(--color-lightest) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.6;
@@ -141,12 +137,12 @@ body {
   font-size: 26px;
   font-weight: 800;
   margin: 0 0 8px;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
 }
 
 .login-subtitle {
   font-size: 14px;
-  color: var(--color-light);
+  color: var(--color-dark);
   margin: 0;
 }
 
@@ -180,7 +176,7 @@ body {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-light);
+  color: var(--color-dark);
   margin-bottom: 10px;
   letter-spacing: 0.3px;
 }
@@ -188,8 +184,8 @@ body {
 .input-wrapper {
   display: flex;
   align-items: center;
-  background: rgba(3, 4, 94, 0.4);
-  border: 1.5px solid rgba(144, 224, 239, 0.25);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1.5px solid rgba(128, 155, 206, 0.25);
   border-radius: 12px;
   padding: 4px 6px 4px 16px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -201,7 +197,7 @@ body {
 }
 
 .input-prefix {
-  color: var(--color-light);
+  color: var(--color-dark);
   font-weight: 600;
   font-size: 15px;
   margin-right: 8px;
@@ -212,7 +208,7 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: 15px;
   padding: 14px 8px;
   font-family: inherit;
@@ -220,7 +216,7 @@ body {
 }
 
 .text-input::placeholder {
-  color: rgba(202, 240, 248, 0.4);
+  color: black(202, 240, 248, 0.4);
 }
 
 /* OTP boxes */

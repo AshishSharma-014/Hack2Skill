@@ -1,21 +1,22 @@
 :root {
-  --color-darkest: #03045e;
-  --color-dark: #0077b6;
-  --color-mid: #00b4d8;
-  --color-light: #90e0ef;
-  --color-lightest: #caf0f8;
+  --color-darkest: #15233c;
+  --color-dark: #4f6481;
+  --color-mid: #809bce;
+  --color-light: #6f84ab;
+  --color-lightest: #ffffff;
+  --surface: #f7faff;
 }
 
-* { box-sizing: border-box; }
+* { 
+  box-sizing: border-box;
+  /* color: black;  */
+}
 
 body {
   margin: 0;
-  color: var(--color-lightest);
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(0, 180, 216, 0.36), transparent 28%),
-    radial-gradient(circle at 86% 8%, rgba(144, 224, 239, 0.24), transparent 24%),
-    var(--color-darkest);
+  color: var(--color-darkest);
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #f7faff 100%);
 }
 
 body::before {
@@ -24,10 +25,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(144, 224, 239, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(144, 224, 239, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(128, 155, 206, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 155, 206, 0.08) 1px, transparent 1px);
   background-size: 54px 54px;
-  mask-image: radial-gradient(circle at center, rgba(3, 4, 94, 1), transparent 76%);
+  opacity: 0.7;
 }
 
 .dashboard {
@@ -50,7 +51,7 @@ body::before {
 .dashboard-header h1 {
   max-width: 820px;
   margin: 0 0 10px;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: clamp(34px, 5vw, 58px);
   line-height: 1;
   font-weight: 950;
@@ -62,7 +63,7 @@ body::before {
 
 .header-subtitle {
   margin: 0;
-  color: var(--color-light);
+  color: var(--color-dark);
   font-size: 15px;
 }
 
@@ -104,11 +105,9 @@ body::before {
 .kpi-card,
 .table-panel,
 .map-panel {
-  border: 1px solid rgba(144, 224, 239, 0.24);
-  background:
-    linear-gradient(145deg, rgba(202, 240, 248, 0.12), rgba(3, 4, 94, 0.55)),
-    rgba(3, 4, 94, 0.56);
-  box-shadow: 0 28px 80px rgba(3, 4, 94, 0.32), inset 0 1px 0 rgba(202, 240, 248, 0.18);
+  border: 1px solid rgba(128, 155, 206, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 255, 0.92));
+  box-shadow: 0 28px 80px rgba(21, 35, 60, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
@@ -157,13 +156,13 @@ body::before {
 }
 
 .kpi-label {
-  color: var(--color-light);
+  color: var(--color-dark);
   font-size: 13px;
   font-weight: 900;
 }
 
 .kpi-value {
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: 34px;
   font-weight: 950;
 }
@@ -192,15 +191,15 @@ body::before {
 
 .panel-header h2 {
   margin: 0;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: 18px;
 }
 
 .panel-tag {
   padding: 7px 12px;
   border-radius: 999px;
-  color: var(--color-darkest);
-  background: var(--color-light);
+  color: var(--color-lightest);
+  background: linear-gradient(135deg, var(--color-mid), #5b78b7);
   font-size: 12px;
   font-weight: 950;
 }
@@ -213,12 +212,13 @@ body::before {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  color: black;
 }
 
 .priority-table thead th {
   padding: 15px 18px;
   text-align: left;
-  color: var(--color-light);
+  color: black;
   background: rgba(3, 4, 94, 0.38);
   border-bottom: 1px solid rgba(144, 224, 239, 0.2);
   font-size: 11px;
@@ -231,7 +231,7 @@ body::before {
 .priority-table tbody td {
   padding: 17px 18px;
   border-bottom: 1px solid rgba(144, 224, 239, 0.14);
-  color: var(--color-lightest);
+  color: balc;
   vertical-align: middle;
   white-space: nowrap;
 }
@@ -362,7 +362,7 @@ body::before {
 }
 
 .map-sub {
-  color: var(--color-light);
+  color: black;
   font-size: 13px;
 }
 
@@ -373,12 +373,13 @@ body::before {
   height: 16px;
   border-radius: 50%;
   background: var(--color-mid);
-  box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.62), 0 0 28px rgba(0, 180, 216, 0.8);
+  box-shadow: 0 0 0 0 rgba(246, 0, 0, 0.601), 0 0 28px rgba(255, 0, 0, 0.602);
   animation: pinPulse 2s infinite;
+  background-color: red;
 }
 
 @keyframes pinPulse {
-  0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.62), 0 0 24px rgba(0, 180, 216, 0.7); }
+  0% { box-shadow: 0 0 0 0 red, 0 0 24px red; }
   70% { box-shadow: 0 0 0 18px rgba(0, 180, 216, 0), 0 0 30px rgba(0, 180, 216, 0.9); }
   100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0), 0 0 24px rgba(0, 180, 216, 0.7); }
 }

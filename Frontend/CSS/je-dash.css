@@ -1,21 +1,18 @@
 :root {
-  --color-darkest: #03045e;
-  --color-dark: #0077b6;
-  --color-mid: #00b4d8;
-  --color-light: #90e0ef;
-  --color-lightest: #caf0f8;
+  --color-darkest: #15233c;
+  --color-dark: #4f6481;
+  --color-mid: #809bce;
+  --color-light: #6f84ab;
+  --color-lightest: #ffffff;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  color: var(--color-lightest);
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background:
-    radial-gradient(circle at 18% 8%, rgba(0, 180, 216, 0.38), transparent 30%),
-    radial-gradient(circle at 86% 18%, rgba(144, 224, 239, 0.22), transparent 24%),
-    var(--color-darkest);
+  color: var(--color-darkest);
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #f7faff 100%);
 }
 
 body::before {
@@ -24,10 +21,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(144, 224, 239, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(144, 224, 239, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(128, 155, 206, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 155, 206, 0.08) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: radial-gradient(circle at center, rgba(3, 4, 94, 1), transparent 75%);
+  opacity: 0.7;
 }
 
 .je-page {
@@ -44,7 +41,7 @@ body::before {
 
 .je-header h1 {
   margin: 0 0 8px;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: clamp(34px, 9vw, 56px);
   line-height: 1;
   font-weight: 950;
@@ -52,7 +49,7 @@ body::before {
 
 .je-subtitle {
   margin: 0;
-  color: var(--color-light);
+  color: var(--color-dark);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -65,12 +62,10 @@ body::before {
 
 .task-card,
 .empty-state {
-  border: 1px solid rgba(144, 224, 239, 0.24);
+  border: 1px solid rgba(128, 155, 206, 0.2);
   border-radius: 28px;
-  background:
-    linear-gradient(145deg, rgba(202, 240, 248, 0.13), rgba(3, 4, 94, 0.56)),
-    rgba(3, 4, 94, 0.56);
-  box-shadow: 0 28px 80px rgba(3, 4, 94, 0.34), inset 0 1px 0 rgba(202, 240, 248, 0.18);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 255, 0.92));
+  box-shadow: 0 28px 80px rgba(21, 35, 60, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
@@ -124,7 +119,7 @@ body::before {
 
 .header-text h3 {
   margin: 0 0 5px;
-  color: var(--color-lightest);
+  color: var(--color-darkest);
   font-size: 16px;
   font-weight: 950;
 }
@@ -132,7 +127,7 @@ body::before {
 .location-text {
   display: block;
   overflow: hidden;
-  color: var(--color-light);
+  color: var(--color-dark);
   font-size: 12px;
   font-weight: 800;
   text-overflow: ellipsis;

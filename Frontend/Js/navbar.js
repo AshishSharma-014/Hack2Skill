@@ -273,6 +273,50 @@ window.JanAwaazI18n = {
   t: value => (localStorage.getItem('janawaaz-lang') === 'HI' ? translateJanAwaazText(value) : value)
 };
 
+function getPreferredVoice(language) {
+  const voices = window.speechSynthesis?.getVoices?.() || [];
+  const langPrefix = language === 'HI' ? 'hi' : 'en';
+  const preferredNames = ['Samantha', 'Karen', 'Zira', 'Alex', 'Google US English', 'Microsoft David', 'Microsoft Zira', 'Daniel'];
+
+  const exactVoice = voices.find(voice => voice.lang.toLowerCase().startsWith(langPrefix) && preferredNames.some(name => voice.name.includes(name)));
+  if (exactVoice) return exactVoice;
+
+  const fallbackVoice = voices.find(voice => voice.lang.toLowerCase().startsWith(langPrefix));
+  return fallbackVoice || null;
+}
+
+function getSpeakableText() {
+  const contentRoot = document.querySelector('main')
+    || document.querySelector('.page')
+    || document.querySelector('.status-page')
+    || document.querySelector('.works-page')
+    || document.querySelector('.about-page')
+    || document.querySelector('.dashboard')
+    || document.querySelector('.je-page')
+    || document.querySelector('.login-page')
+    || document.body;
+
+  const walker = document.createTreeWalker(contentRoot, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('.navbar, .nav-links, .nav-actions, .lang-switcher, .hamburger, script, style, textarea, input, select, noscript')) return NodeFilter.FILTER_REJECT;
+      const style = window.getComputedStyle(parent);
+      if (style.display === 'none' || style.visibility === 'hidden') return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  const chunks = [];
+  while (walker.nextNode()) {
+    const cleaned = walker.currentNode.nodeValue.replace(/\s+/g, ' ').trim();
+    if (cleaned) chunks.push(cleaned);
+  }
+
+  return chunks.join(' ').slice(0, 2000) || document.title;
+}
+
 function initNavbar() {
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
@@ -281,6 +325,7 @@ function initNavbar() {
   const langBtn = document.getElementById('langBtn');
   const langDropdown = document.getElementById('langDropdown');
   const langLabel = document.getElementById('langLabel');
+  const speakBtn = document.getElementById('speakBtn');
 
   if (!hamburger || !navLinks || !navActions) return;
 
@@ -335,6 +380,36 @@ function initNavbar() {
         langSwitcher.classList.remove('open');
         langBtn.setAttribute('aria-expanded', 'false');
       }
+    });
+  }
+
+  if (speakBtn) {
+    speakBtn.addEventListener('click', () => {
+      const speech = window.speechSynthesis;
+      if (!speech) {
+        alert('Text-to-speech is not supported in this browser.');
+        return;
+      }
+
+      if (speech.speaking) {
+        speech.cancel();
+        speakBtn.querySelector('.speak-text').textContent = 'Speak';
+        return;
+      }
+
+      const speechText = getSpeakableText();
+      const utterance = new SpeechSynthesisUtterance(speechText);
+      const language = localStorage.getItem('janawaaz-lang') === 'HI' ? 'HI' : 'EN';
+      utterance.lang = language === 'HI' ? 'hi-IN' : 'en-US';
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      utterance.voice = getPreferredVoice(language);
+      utterance.onend = () => {
+        speakBtn.querySelector('.speak-text').textContent = 'Speak';
+      };
+      speech.cancel();
+      speech.speak(utterance);
+      speakBtn.querySelector('.speak-text').textContent = 'Stop';
     });
   }
 

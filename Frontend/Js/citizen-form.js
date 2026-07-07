@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const API_BASE = window.JANAWAAZ_API_BASE || 'http://localhost:5000/api';
   const form = document.getElementById('complaintForm');
-  const phoneInput = document.getElementById('phoneInput');
+  const emailInput = document.getElementById('emailInput');
   const complaintText = document.getElementById('complaintText');
   const locationTextInput = document.getElementById('locationTextInput');
   const voiceBtn = document.getElementById('voiceBtn');
@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const t = message => window.JanAwaazI18n?.t(message) || message;
   const currentLang = () => window.JanAwaazI18n?.current() || 'EN';
 
-  phoneInput.addEventListener('input', () => {
-    phoneInput.value = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+  emailInput.addEventListener('input', () => {
+    emailInput.value = emailInput.value.trim();
   });
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -85,9 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitText = submitBtn.querySelector('.submit-text');
     const originalText = submitText.textContent;
 
-    if (phoneInput.value.length !== 10) {
-      setStatus(t('Please enter a valid 10-digit mobile number.'));
-      phoneInput.focus();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(emailInput.value.trim())) {
+      setStatus(t('Please enter a valid email address.'));
+      emailInput.focus();
       return;
     }
 
@@ -105,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          phone: phoneInput.value,
+          email: emailInput.value.trim(),
           description: complaintText.value,
           locationText: locationTextInput.value,
           coordinates,

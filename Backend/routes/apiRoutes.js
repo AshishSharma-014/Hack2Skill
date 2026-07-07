@@ -36,14 +36,15 @@ router.get('/complaints/:id', (req, res) => {
 });
 
 router.post('/complaints', (req, res) => {
-  const { description, locationText, coordinates, phone, evidenceName, voiceNoteName } = req.body;
+  const { description, locationText, coordinates, email, evidenceName, voiceNoteName } = req.body;
+  const contactEmail = String(email || '').trim();
 
   if (!description || description.trim().length < 10) {
     return res.status(400).json({ message: 'Please describe the issue in at least 10 characters.' });
   }
 
-  if (!/^\d{10}$/.test(String(phone || ''))) {
-    return res.status(400).json({ message: 'A 10-digit mobile number is required for spam prevention.' });
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
+    return res.status(400).json({ message: 'A valid email address is required for follow-up.' });
   }
 
   const ai = analyzeComplaint({ description, locationText });
@@ -59,7 +60,7 @@ router.post('/complaints', (req, res) => {
     coordinates: coordinates || null,
     status: 'NEW',
     assignedTo: null,
-    phone,
+    email: contactEmail,
     evidenceName: evidenceName || '',
     voiceNoteName: voiceNoteName || '',
     beforePhotoName: '',
